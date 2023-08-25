@@ -1,0 +1,24 @@
+
+{
+    "server": false,
+    "client_addr": "0.0.0.0",
+    "datacenter": "Us-Central",
+    "bind_addr": "192.168.100.7",
+    "data_dir": "/var/consul",
+    "domain": "consul",
+    "enable_script_checks": true,
+    "dns_config": {
+        "enable_truncate": true,
+        "only_passing": true
+    },
+    "enable_syslog": true,
+    "encrypt": "9iVEzR/1smgZQT+o4cuf0A==",
+    "leave_on_terminate": true,
+    "log_level": "INFO",
+    "rejoin_after_leave": true,
+    "retry_join": [
+        "192.168.100.6",
+        "192.168.100.8"
+    ],
+    "ui": true
+}

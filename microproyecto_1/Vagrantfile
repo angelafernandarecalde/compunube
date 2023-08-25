@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Specify a Consul version
+#CONSUL_DEMO_VERSION = ENV['CONSUL_DEMO_VERSION']
+
+Vagrant.configure("2") do |config|
+
+  if Vagrant.has_plugin? "vagrant-vbguest"
+    config.vbguest.no_install  = true
+    config.vbguest.auto_update = false
+    config.vbguest.no_remote   = true
+  end
+  # Provision general para haproxy - servicio 1 y servicio 2
+  config.vm.provision "shell", path: "provision/script.sh"
+
+  config.vm.define :haproxy do |haproxy|
+    haproxy.vm.box = "bento/ubuntu-20.04"
+    haproxy.vm.network :private_network, ip: "192.168.100.6" 
+    haproxy.vm.hostname = "haproxy"
+    haproxy.vm.provision "shell" do |s|
+      s.path = "provision/haproxy/script_haproxy.sh"
+    end
+  end
+
+  config.vm.define :servicio1 do |servicio1|
+    servicio1.vm.box = "bento/ubuntu-20.04"
+    servicio1.vm.network :private_network, ip: "192.168.100.7" 
+    servicio1.vm.hostname = "servicio1"
+    servicio1.vm.provision "shell" do |s|
+      s.path = "provision/servicio1/script_servicio1.sh"
+    end
+
+  end
+
+  config.vm.define :servicio2 do |servicio2|
+    servicio2.vm.box = "bento/ubuntu-20.04"
+    servicio2.vm.network :private_network, ip: "192.168.100.8" 
+    servicio2.vm.hostname = "servicio2"
+    servicio2.vm.provision "shell" do |s|
+      s.path = "provision/servicio2/script_servicio2.sh"
+    end
+  end
+
+  
+end
